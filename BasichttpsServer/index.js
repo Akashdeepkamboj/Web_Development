@@ -9,15 +9,42 @@ function requestHandler(req,res){
     console.log(req.url);
     res.writeHead(200,{'content-type' : 'text/html'});
     
-    fs.readFile('./index.html',(err,data)=>{
+
+    let filePath;
+
+    switch(req.url){
+        case'/':
+            filePath = './index.html'
+            break;
+        case'/profile':
+            filePath = './Profile.html'
+            break;
+
+        default:
+            filePath = './404.html'
+
+    }
+
+    fs.readFile(filePath,(err,data)=>
+    {
         if(err){
-            console.log('error exists  while reading the file',err);
+                    console.log('error exists  while reading the file',err);
             return res.end('<h1>Error<h1>')
         }
 
-        return res.end(data);
+        res.end(data);
+    });
 
-    })
+
+    // fs.readFile('./index.html',(err,data)=>{
+    //     if(err){
+    //         console.log('error exists  while reading the file',err);
+    //         return res.end('<h1>Error<h1>')
+    //     }
+
+    //     return res.end(data);
+
+    // })
     
     //res.end('<h1>akash<h1>');
 }

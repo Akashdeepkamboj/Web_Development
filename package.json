@@ -1,0 +1,22 @@
+{
+  "name": "web_development",
+  "version": "1.0.0",
+  "description": "web_development",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Akashdeepkamboj/Web_Development.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Akashdeepkamboj/Web_Development/issues"
+  },
+  "homepage": "https://github.com/Akashdeepkamboj/Web_Development#readme",
+  "dependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
