@@ -1,8 +1,27 @@
 <html>
     <head>
-        <title>HomePage</title>
+        <title>
+            <%= title %>
+        </title>
     </head>
     <body>
-        <h1>my ejs templated course</h1>
+        <h1>Contact List</h1>
+            <div>
+                <ul>
+                    <% for(i of contact) { %>
+                        <li>
+                            <p> <%= i.name %>   </p>
+                            <p> <%= i.phone %> </p>
+                        </li>
+                    <%}%>
+                </ul> 
+            </div>
+            <div>
+                <form action="/create-contact" method="POST">
+                    <input type="text" id="Name" name="name">
+                    <input type="Number" id="Phone" name="phone"> <br>
+                    <input type="submit" value="submit">
+                </form>
+            </div>
     </body>
 </html>
