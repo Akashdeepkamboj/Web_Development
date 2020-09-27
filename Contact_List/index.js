@@ -13,21 +13,23 @@ const app = express();    // start up the server automatically
 //app has multiple property
 app.set('view engine', 'ejs');
 app.set('views',path.join(__dirname,'views'));
-app.use(express.urlencoded({extended:true}));
+app.use(express.static('asset'));                     //expree middleware for the static file 
+app.use(express.urlencoded({extended:true}));          //express middleware to decode the response coming from form 
 
 
 
-//MiddleWare
-app.use((req,res,next)=>{
-    console.log('1st middleware called');
-    next();
-})
+
+// //MiddleWare
+// app.use((req,res,next)=>{
+//     console.log('1st middleware called');
+//     next();
+// })
 
 
-app.use((req,res,next)=>{
-    console.log('2nd Middleware');
-    next();
-})
+// app.use((req,res,next)=>{
+//     console.log('2nd Middleware');
+//     next();
+// })
 
 
 var contactList =[
@@ -62,6 +64,35 @@ app.post('/create-contact',(req,res)=>{
 //    })
    return res.redirect('/');
 })
+ 
+
+//with query params
+app.get('/delete-contact',(req,res)=>{
+
+    //get the query from the url
+    let Phone = req.query.phone;
+    //find the index in the array
+    var contactIndex = contactList.findIndex( contact =>  contact.phone == Phone)
+
+    console.log("contact which needs to be deleted found at "+ contactIndex);
+//delete the element from the array using the splice function
+    if(contactIndex != -1){
+        contactList.splice(contactIndex,1);
+    }
+
+    return res.redirect('back')
+})
+
+
+// with string params 
+// app.get('/delete-contact/:phone',(req,res)=>{
+    
+//     let phone ='';
+//     console.log(req.params)
+// })
+
+
+//app.get('')
 
 app.get('/practice',(req,res)=>{
    console.log("entered in get of practice")
