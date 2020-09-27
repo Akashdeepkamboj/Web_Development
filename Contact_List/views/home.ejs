@@ -3,25 +3,49 @@
         <title>
             <%= title %>
         </title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <!--adding our own style sheet below all the other style sheets so that we could override there style sheet-->
+        <link rel="stylesheet" href="/css/home.css">
     </head>
     <body>
-        <h1>Contact List</h1>
+
+
+        
+        <h1 id="Page-heading">
+            <i class="fa fa-address-book"></i>
+            My Contact List</h1>
             <div>
                 <ul>
                     <% for(i of contact) { %>
+                      <div class="contact">
                         <li>
                             <p> <%= i.name %>   </p>
                             <p> <%= i.phone %> </p>
                         </li>
+                    </div>
+                    <div class="delete-button">
+                        
+                        <!-- for string params-->
+                      <!--  <a href="/delete-contact/<%=i.phone%>">  -->
+                            <!--
+                            for query params -->
+                            <a href="/delete-contact/?phone=<%= i.phone %>">
+                        
+                        <i class="fa fa-window-close"></i>
+                    </a>
+                    </div>
                     <%}%>
                 </ul> 
             </div>
             <div>
                 <form action="/create-contact" method="POST">
                     <input type="text" id="Name" name="name">
-                    <input type="Number" id="Phone" name="phone"> <br>
-                    <input type="submit" value="submit">
+                    <input type="Number" id="Phone" name="phone"> 
+                    <button type="submit" > Add </button>
                 </form>
             </div>
-    </body>
+            <script type="text/javascript" src="js/home.js"></script>
+        </body>
+
 </html>
