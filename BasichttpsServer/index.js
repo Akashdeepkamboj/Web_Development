@@ -11,7 +11,7 @@ function requestHandler(req,res){
     
 
     let filePath;
-
+    console.log(req.url);
     switch(req.url){
         case'/':
             filePath = './index.html'

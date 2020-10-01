@@ -1,8 +1,10 @@
 const express = require('express');
 const path = require('path');
-
-
 const port =8000;
+
+const db = require('./Config/mongoose');
+const Conact =require('./models/contact');
+
 
 const app = express();    // start up the server automatically
 
@@ -49,38 +51,86 @@ var contactList =[
 
 
 app.get('/',(req,res)=>{
-  //  res.send('cool,it is runnning');
+   //code of finding the data of the contact list from database
+   Conact.find({},(err,contact_data) => {
+    if(err){
+        console.log('error in getting data from the database');
+        return;
+    }
+    return res.render('home',{
+        title:"My Contact list",
+         contact : contact_data
+    })
+}) 
+
+  //code of storage the data in array of contact list
+    /* res.send('cool,it is runnning');
     return res.render('home',
     {title:"My contact list",
     contact: contactList});
-
+*/
 })
 
 app.post('/create-contact',(req,res)=>{
-    contactList.push(req.body);
+    Conact.create({
+        name:req.body.name,
+        phone: req.body.phone
+    }, function (err, newContact){
+        if(err){
+            console.log('error in creating contact!');
+            return;
+        }
+
+        console.log('**********',newContact);
+    });
+   return res.redirect('/');
+
+    //   contactList.push(req.body);
     //    contactList.push({
 //        name:req.body.Name,
 //        phone:req.body.Phone
 //    })
-   return res.redirect('/');
+
+
 })
  
 
-//with query params
+//with query with id object from the  
 app.get('/delete-contact',(req,res)=>{
+   
+    //Get ID from the query url
+    const id = req.query.id;
+    console.log(req.query.id);
+    //Find the element and delete it from DB and Front End
+    Conact.findByIdAndDelete(id,function(err){
+        if(err){
+            console.log('not able to delete the contact there is some issue coming')
+            return;
+        }
+        return res.redirect('back')
+    })
+        
 
-    //get the query from the url
-    let Phone = req.query.phone;
-    //find the index in the array
-    var contactIndex = contactList.findIndex( contact =>  contact.phone == Phone)
+   
+    
 
-    console.log("contact which needs to be deleted found at "+ contactIndex);
-//delete the element from the array using the splice function
-    if(contactIndex != -1){
-        contactList.splice(contactIndex,1);
-    }
 
-    return res.redirect('back')
+
+
+
+
+//     //get the query from the url
+//     let Phone = req.query.phone;
+//     //find the index in the array
+//     var contactIndex = contactList.findIndex( contact =>  contact.phone == Phone)
+
+//     console.log("contact which needs to be deleted found at "+ contactIndex);
+// //delete the element from the array using the splice function
+//     if(contactIndex != -1){
+//         contactList.splice(contactIndex,1);
+//     }
+
+//     return res.redirect('back')
 })
 
 
